@@ -7,6 +7,10 @@ cipher_list = original_text.split()
 for i in range(len(cipher_list)):
     cipher_list[i] = cipher_list[i].lower()
 
+words = []
+for i in range(len(cipher_list)):
+    words.append(cipher_list[i])
+
 num_rows = int(input("Enter number of rows:\n"))
 num_cols = int(input("Enter number of columns:\n"))
 
@@ -82,7 +86,26 @@ for c in range(num_cols):
         first_smallest_column_index = c
         break
 
-filler_words = ["rest", "is", "just", "filler"]
+# you can change filler word list to whatever you please. Ensure words in filler_words list
+# are not actual words in the real message to prevent confusion.
+filler_words = []
+for key in code_words:
+    words.append(code_words[key])
+num = 1
+pprint.pprint(words)
+f_w = input("\nEnter filler word number " + str(num) + ". Make sure they are not any of \nthe words above to avoid confusion. Only enter words that make up \none cycle if they will repeat. Enter 's' to stop.\n")
+while f_w != 's':
+    if f_w not in words and f_w not in filler_words:
+        filler_words.append(f_w)
+        num += 1
+    else:
+        print("\nSorry, it looks like your filler word cannot be used. Please try to make it unique.\n")
+
+    pprint.pprint(words)
+    f_w = input("\nEnter filler word number " + str(num) + ". Make sure they are not any of \nthe words above to avoid confusion. Only enter words that make up \none cycle if they will repeat. Enter 's' to stop.\n")
+
+
+
 curr_filler_index = 0
 curr_col_index = first_smallest_column_index
 while len(translation_matrix[curr_col_index]) < num_rows:
@@ -111,7 +134,7 @@ for l in range(num_cols):
         if l == num_cols - 1 and i == num_rows - 1:
             cyphertext += curr_col[i]
         else:
-            cyphertext = cyphertext + curr_col[i] + " "
+            cyphertext += curr_col[i] + " "
 
 print("This is the direction key:\n")
 print(key + "\n")
