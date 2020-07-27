@@ -1,0 +1,209 @@
+<!doctype html>
+<html>
+
+<head>
+
+    <style type="text/css">
+
+    body {
+        background-image: url(englishBreakfast.jpg);
+        background-repeat: no-repeat;
+        background-position:inherit;
+        background-size: cover;
+    } 
+
+    #billPriceText {
+        position:absolute;
+        text-align:center;
+        width:100%; 
+        font-size:40px;
+        color: ivory;
+    }
+
+    #priceDiv {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:60px;
+        font-size:x-large;
+        color: ivory;
+    }
+
+    #serviceText {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:140px;
+        font-size:40px;
+        color:ivory;
+    }
+
+    #serviceTextBox {
+        position:absolute;
+        display:inline;
+        text-align:center;
+        width:100%;
+        top:190px;
+        font-size:x-large;
+        color:ivory;
+    }
+
+    #numberOfPeopleText {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:280px;
+    }
+
+    #numberOfPeopleTextSpan {
+        font-size:40px;
+        background-color:ivory;
+        padding:2px;
+    }
+
+    #numberOfPeopleDiv {
+        position:absolute;
+        text-align:center;
+        width: 100%;
+        top:350px;
+        font-size:x-large;
+    }
+
+    #submitButtonDiv {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:420px;
+    }
+
+    #tipAmountText {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:490px;
+    }
+
+    #tipAmountTextSpan {
+        font-size:40px;
+        background-color:ivory;
+        padding:2px;
+    }
+
+    #tipAmount {
+        position:absolute;
+        text-align:center;
+        width:100%;
+        top:560px;
+    }
+
+    #tipAmountSpan {
+        font-size:40px;
+        background-color:ivory;
+    }
+
+    #button1 {
+        height:50px;
+        width:100px;
+        font-size: 18px;
+    }
+    
+    </style>
+
+</head>
+
+<body>
+
+    <div id="billPriceText">
+        What was the total bill price?
+    </div>
+
+    <div id="priceDiv">
+        Price:
+        <br />
+        <input type="text" id="priceValue" name="totalPrice">
+    </div>
+
+    <div id="serviceText">
+        How was your service?
+    </div>
+
+    <div id="serviceTextBox">
+        <form>
+            Service:
+            <br />
+            <select name="serviceLevel" id = "serviceTextBoxValue">
+                <option value=.30>Outstanding - 30% tip</option>
+                <option value=.20>Good - 20% tip</option>
+                <option value=.15>Ok - 15% tip</option>
+                <option value=.10>Bad - 10% tip</option>
+                <option value=.05>Terrible - 5% tip</option>
+            </select>
+        </form>
+    </div>
+
+    <div id="numberOfPeopleText">
+        <span id="numberOfPeopleTextSpan">How many people are sharing the bill?</span>
+    </div>
+
+    <div id="numberOfPeopleDiv">
+            Number of People:
+            <br />
+            <input type="text" id="numberOfPeople" name="totalPeople">
+    </div>
+
+    <div id="submitButtonDiv">
+        <input type="button" id="button1" value="Calculate!" onclick="calculateAndDisplayTip()">
+    </div>
+
+    <div id="tipAmountText">
+        <span id="tipAmountTextSpan">Tip Per Person:</span>
+    </div>
+
+    <div id="tipAmount">
+        <span id="tipAmountSpan"></span>
+    </div>
+
+    <script type="text/javascript">
+
+    var totalPrice;
+    var tipPercent;
+    var numPeople;
+
+    var pricePerPersonDisplay = document.querySelector("#tipAmountSpan");
+    
+    function calculateAndDisplayTip() {
+        totalPrice = document.getElementById("priceValue").value;   //Make sure id is that of 
+                                                                    //the actual textbox, not
+                                                                    //the div of the textbox.
+        totalPrice = parseFloat(totalPrice, 10);                                                          
+        tipPercent = document.getElementById("serviceTextBoxValue").value;
+        numPeople = document.getElementById("numberOfPeople").value;
+        numPeople = parseInt(numPeople, 10);
+
+        var totalTip = totalPrice * tipPercent;
+        var tipPerPerson = totalTip / numPeople;
+
+        tipPerPerson = tipPerPerson.toString();
+
+        if (!tipPerPerson.includes(".")) {
+            tipPerPerson += ".00";
+        }
+        if (tipPerPerson.includes(".")) {
+            var indexOfDecimal = tipPerPerson.indexOf(".");
+            var numsAfterDecimal = tipPerPerson.length - (indexOfDecimal + 1);
+            if (numsAfterDecimal < 2) {
+                tipPerPerson += "0";
+            } else if (numsAfterDecimal > 2) {
+                var indicesToInclude = indexOfDecimal + 3;
+                tipPerPerson = tipPerPerson.substring(0, indicesToInclude);
+            }
+        }
+
+        pricePerPersonDisplay.textContent = "$" + tipPerPerson;    
+    }
+
+    </script>
+
+</body>
+
+</html>
