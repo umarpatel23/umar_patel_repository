@@ -1,0 +1,110 @@
+<!doctype html>
+
+<html>
+<head>
+    <title>
+        Clock
+    </title>
+
+    <style type="text/css">
+    body {
+        background-image: url("/Users/umarpatel/Desktop/HTML_Javascript Website Practice/towerbridge.jpg");
+        background-repeat: no-repeat;
+        background-size: cover;
+    }
+
+    .clock {
+        position:absolute;
+        font-family: "Impact";
+        font-weight: bold;
+        font-size: 5vw;
+        text-align: center;
+        top:100px;
+        width: 100%;        
+       
+    }
+
+    #location {
+        position:absolute;
+        font-family: "Impact";
+        font-size: 2vw;
+    }
+    
+    </style>
+
+</head>
+
+<body>
+
+    <div class="clock"></div>    
+    <div id="location">
+        <h1>
+            London
+            <br />
+            United Kingdom
+        </h1>
+
+    </div>
+
+    <script type="text/javascript">
+
+    var hours; 
+    var minutes;
+    var seconds;
+    var timeOfDay;
+    
+
+    var clockDisplay;
+
+    var currentTime = document.querySelector('.clock');
+
+    function showTime() {
+        clockDisplay = setInterval(runTime, 10);
+    }
+
+    function runTime() {
+        var time = new Date();
+        hours = time.getHours();
+        minutes = time.getMinutes();
+        seconds = time.getSeconds();
+
+        hours = parseInt(hours, 10);
+        minutes = parseInt(minutes, 10);
+        seconds = parseInt(seconds, 10);
+        
+        if (hours >= 12) {
+            timeOfDay = "pm";
+            if (hours > 12) {
+                hours = hours - 12;
+            }
+        } else {
+            timeOfDay = "am";
+        }
+
+        hours = hours.toString();
+        minutes = minutes.toString();
+        seconds = seconds.toString();
+
+        if (hours.length < 2) {
+            hours = "0" + hours;
+        }
+
+        if (minutes.length < 2) {
+            minutes = "0" + minites;
+        }
+
+        if (seconds.length < 2) {
+            seconds = "0" + seconds;
+        }
+        
+        currentTime.textContent = hours + ":" + minutes + ":" + seconds + " " + timeOfDay;
+    }
+
+    showTime();
+    </script>
+
+
+</body>
+
+
+</html>
