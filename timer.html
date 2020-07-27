@@ -1,0 +1,195 @@
+<!doctype html>
+
+<html>
+
+<head>
+<title>
+    Stopwatch
+</title>
+
+<style type="text/css">
+    body {
+        background-image:url(rodeo.jpg);
+        background-repeat: no-repeat;
+        background-size: 100%
+    }
+
+    .firstHeader {
+        text-align:center;
+        font-family: 'Lucida Grande';
+        color:yellow;
+    }
+    #start {
+        position:absolute;
+        top:250px;
+        left:37px;
+        font-size:60px;
+        font-family: 'Lucida Grande';
+    }
+
+    #pause {
+        position: absolute;
+        top:120px;
+        left:530px;
+        font-size:60px;
+        font-family:'Lucida Grande';
+    }
+
+    #reset {
+        position: absolute;
+        top:255px;
+        left:1040px;
+        font-size:60px;
+        font-family:'Lucida Grande';
+    }
+
+    .stopwatch {
+        position:absolute;
+        top:575px;
+        left:326px;
+        font-size:100px;
+        font-family:'Lucida Grande';
+    }
+
+    .description1 {
+        position:absolute;
+        top:20px;
+        left:25px;
+        font-size:25px;
+        font-family:'Lucida Grande';
+        color:yellow;
+    }
+
+    .description2 {
+        position:absolute;
+        top:47px;
+        left:25px;
+        font-size:25px;
+        font-family:'Lucida Grande';
+        color:yellow;
+    }
+
+    .description3 {
+        position:absolute;
+        top:20px;
+        left:985px;
+        font-size:25px;
+        font-family: 'Lucida Grande';
+        color:yellow;
+    }
+
+    .description4 {
+        position:absolute;
+        top:47px;
+        left:985px;
+        font-size:25px;
+        font-family: 'Lucida Grande';
+        color:yellow;
+    }
+
+</style>
+
+</head>
+
+<body>
+
+    <h1 class="firstHeader">Umar's Wild West Rodeo Stopwatch</h1>
+    <p class="description1">For all you cowboys</p>
+    <p class="description2">and cowgirls out there!</p>
+    <p class="description3">For any type of rodeo</p>
+    <p class="description4">any time, any day!</p>
+
+
+    <input id="start" type="button" value="START" onclick="startTime()">
+    <input id="pause" type="button" value="PAUSE" onClick="stopTime()">
+    <input id="reset" type="button" value="RESET" onclick="resetTime()">
+    
+    <div class="stopwatch">00:00:00:00</div>
+    
+    <script type="text/javascript">
+
+        var hours = "00";
+        var minutes = "00";
+        var seconds = "00";
+        var milliseconds = "00";
+        var timer;
+        var isTimerOn = false;
+            
+        var currentTimeStopwatch = document.querySelector('.stopwatch');
+        
+        function startTime() {
+            if (isTimerOn == false) {
+                timer = setInterval(runTime, 10);
+                isTimerOn = true;
+            } 
+        }
+    
+        function stopTime() {
+            if (isTimerOn == true) {
+                clearInterval(timer);
+                isTimerOn = false;
+            }
+        }
+    
+        function resetTime() {
+            stopTime();
+            currentTimeStopwatch.textContent = "00" + ":" + "00" + ":" + "00" + ":" + "00";
+            hours = "00";
+            minutes = "00";
+            seconds = "00";
+            milliseconds = "00";
+            isTimerOn = false;
+        }
+    
+        function runTime() {
+            currentTimeStopwatch.textContent = hours + ":" + minutes + ":" + seconds + ":" + milliseconds;
+            //Converting times in string to int
+            hours = parseInt(hours, 10);
+            minutes = parseInt(minutes, 10);
+            seconds = parseInt(seconds, 10);
+            milliseconds = parseInt(milliseconds, 10);
+
+            milliseconds += 1;  // Interval is set in increments of 10 milliseconds so to maintain
+                                // two decimal points we increment it by one (there are 100 10-
+                                // milliseconds in a second).
+
+            if (milliseconds == 100) {
+                milliseconds = 0;
+                seconds += 1;
+            }
+            if (seconds == 60) {
+                seconds = 0;
+                minutes += 1;
+            }
+            if (minutes == 60) {
+                minutes = 0;
+                hours += 1;
+            }
+
+            hours = hours.toString();
+            minutes = minutes.toString();
+            seconds = seconds.toString();
+            milliseconds = milliseconds.toString();
+
+            if (hours.length < 2) {
+                hours = "0" + hours;
+            } 
+
+            if (minutes.length < 2) {
+                minutes = "0" + minutes;
+            } 
+
+            if (seconds.length < 2) {
+                seconds = "0" + seconds;
+            } 
+
+            if (milliseconds.length < 2) {
+                milliseconds = "0" + milliseconds;
+            } 
+        }
+    
+    </script>
+
+</body>
+
+</html>
